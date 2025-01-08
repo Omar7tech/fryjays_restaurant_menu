@@ -29,32 +29,34 @@ class ProductCreate extends Component
 
     public function save()
     {
-        $this->validate([
+
+
+        $data = $this->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string|max:1000',
-            'price' => 'nullable|numeric',
+            'price' => 'nullable|numeric|sometimes|required_with:new_price',
             'small' => 'nullable|numeric',
             'large' => 'nullable|numeric',
             'new_price' => 'nullable|numeric',
             'preparation_time' => 'nullable|integer',
-            'category_id' => 'nullable|exists:categories,id',
+            'category_id' => 'required|exists:categories,id',
             'design' => 'required|in:1,2',
         ]);
-
+        
         Product::create([
             'name' => $this->name,
-            'description' => $this->description,
-            'price' => $this->price,
-            'small' => $this->small,
-            'large' => $this->large,
-            'new_price' => $this->new_price,
+            'description' => $this->description  ?? null,
+            'price' => $this->price  ?? null,
+            'small' => $this->small  ?? null,
+            'large' => $this->large  ?? null,
+            'new_price' => $this->new_price ?? null,
             'preparation_time' => $this->preparation_time,
             'category_id' => $this->category_id,
             'design' => $this->design,
-            'position' => (Product::max("position") +1 )
+            'position' => (Product::max("position") + 1)
         ]);
 
-        return $this->redirect(route('admin.products.index') , navigate:true);
+        return $this->redirect(route('admin.products.index'), navigate: true);
     }
 
     public function render()

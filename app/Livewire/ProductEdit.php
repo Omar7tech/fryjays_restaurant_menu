@@ -38,12 +38,12 @@ class ProductEdit extends Component
         $this->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string|max:1000',
-            'price' => 'nullable|numeric',
+            'price' => 'nullable|numeric|sometimes|required_with:new_price',
             'small' => 'nullable|numeric',
             'large' => 'nullable|numeric',
             'new_price' => 'nullable|numeric',
             'preparation_time' => 'nullable|integer',
-            'category_id' => 'nullable|exists:categories,id',
+            'category_id' => 'required|exists:categories,id',
             'design' => 'required|in:1,2',
         ]);
 
