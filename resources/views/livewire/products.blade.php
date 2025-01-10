@@ -8,7 +8,9 @@
             </svg>
         </a>
     </div>
-
+    <div class="search">
+        <input wire:model.live="search" type="text" placeholder="Type to search" class="input input-bordered input-primary w-full max-w-xs" />
+    </div>
     <!-- Responsive Table -->
     <div class="overflow-x-auto">
         <table class="table w-full table-zebra">
@@ -73,8 +75,7 @@
                                 $category = $product->category->id;
                             @endphp
                             <div class="flex gap-1">
-                                <a wire:navigate
-                                    href="{{ route('admin.products.category', $category) }}"
+                                <a wire:navigate href="{{ route('admin.products.category', $category) }}"
                                     class="btn btn-primary btn-sm">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                         stroke-width="1.5" stroke="currentColor" class="size-6">

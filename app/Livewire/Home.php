@@ -20,8 +20,7 @@ class Home extends Component
 
     public function updatedSearch()
     {
-        $this->s_products = Product::where("name", "LIKE", "%{$this->search}%")->get();
-    }
+$this->s_products = Product::where("name", "LIKE", "%{$this->search}%")->orderBy('name')->get();    }
 
     public function render()
     {

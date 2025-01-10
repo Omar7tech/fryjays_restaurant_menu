@@ -2,7 +2,7 @@
     <h2 class="text-2xl font-bold mb-4">Create Product</h2>
 
     @if ($errors->any())
-    <div class="alert alert-danger mb-4">
+    <div class="alert alert-error mb-4">
         <ul>
             @foreach ($errors->all() as $error)
                 <li>{{ $error }}</li>
@@ -72,5 +72,15 @@
 
 
         <button type="submit" class="btn btn-primary w-full">Create Product</button>
+
+        @if ($errors->any())
+            <div class="alert alert-error mb-4">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
     </form>
 </div>

@@ -61,8 +61,8 @@
         <div class="flex-1">
             @if ($setting->show_description)
                 <p class="text-sm text-gray-500">
-                    {{ $product->description }} ,
-                    {{ $product->preparation_time && $setting->show_preparation_time ? 'Preparation Time : ' . $product->preparation_time . ' mins' : '' }}
+                    {{ $product->description }}
+                    {{ $product->preparation_time && $setting->show_preparation_time ? ', Preparation Time : ' . $product->preparation_time . ' mins' : '' }}
                 </p>
             @endif
 

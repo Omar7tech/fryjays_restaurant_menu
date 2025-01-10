@@ -10,9 +10,10 @@ class Products extends Component
 {
 
     use WithPagination;
+    public $search = '';
     public function render()
     {
-        $products = Product::latest()->paginate(12);
+        $products = Product::where("name" , "LIKE" , "%{$this->search}%")->with("category")->latest()->paginate(10);
         return view('livewire.products', [
             'products' => $products,
         ]);

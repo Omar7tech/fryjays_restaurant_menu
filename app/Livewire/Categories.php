@@ -10,7 +10,7 @@ class Categories extends Component
 
     public function render()
     {
-        $categories = Category::orderBy('position')->get();
+        $categories = Category::orderBy('position')->with("products")->get();
         return view('livewire.categories', compact("categories"));
     }
 

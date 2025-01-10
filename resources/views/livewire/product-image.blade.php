@@ -1,5 +1,10 @@
 <div>
 
+    <div class="flex justify-center">
+        <div>
+            Editing Image For : {{ $product->name }}
+        </div>
+    </div>
 
     <!-- Show Image and Delete Button if an Image Exists -->
     @if ($product->image)

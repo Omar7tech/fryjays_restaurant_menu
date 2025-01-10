@@ -26,7 +26,7 @@ Route::prefix("admin")->name("admin.")->group(function () {
         Route::get("/{product}", ProductShow::class)->name("show");
         Route::get("/{product}/edit", ProductEdit::class)->name("edit");
         Route::get("/{product}/image", ProductImage::class)->name("image");
-        Route::get("/category/{category}", ProductsCategory::class)->middleware('exists:categories,id')->name("category");
+        Route::get("/category/{category}", ProductsCategory::class)->name("category");
     });
 
 
@@ -37,7 +37,5 @@ Route::prefix("admin")->name("admin.")->group(function () {
     });
 
     Route::get("/settings", Settings::class)->name("settings");
-
-
 
 });

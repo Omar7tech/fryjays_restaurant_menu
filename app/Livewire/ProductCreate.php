@@ -42,19 +42,20 @@ class ProductCreate extends Component
             'category_id' => 'required|exists:categories,id',
             'design' => 'required|in:1,2',
         ]);
-        
+
         Product::create([
             'name' => $this->name,
-            'description' => $this->description  ?? null,
-            'price' => $this->price  ?? null,
-            'small' => $this->small  ?? null,
-            'large' => $this->large  ?? null,
-            'new_price' => $this->new_price ?? null,
-            'preparation_time' => $this->preparation_time,
+            'description' => $this->description ?? null,
+            'price' => $this->price !== '' ? $this->price : null,
+            'small' => $this->small !== '' ? $this->small : null,
+            'large' => $this->large !== '' ? $this->large : null,
+            'new_price' => $this->new_price !== '' ? $this->new_price : null,
+            'preparation_time' => $this->preparation_time !== '' ? $this->preparation_time : null,
             'category_id' => $this->category_id,
             'design' => $this->design,
-            'position' => (Product::max("position") + 1)
+            'position' => (Product::max("position") + 1),
         ]);
+        
 
         return $this->redirect(route('admin.products.index'), navigate: true);
     }

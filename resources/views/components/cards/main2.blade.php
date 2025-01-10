@@ -1,4 +1,4 @@
-@props(['product' => [] , 'setting' => []])
+@props(['product' => [], 'setting' => []])
 
 <div class="card bg-base-100 shadow-xl p-5">
     <!-- Title and Price -->
@@ -10,6 +10,7 @@
     </div>
     <p class="text-sm text-gray-500">
         {{ $product->description }}
+        {{ $product->preparation_time && $setting->show_preparation_time ? ', Preparation Time : ' . $product->preparation_time . ' mins' : '' }}
     </p>
     <!-- Sizes -->
     @if ($setting->show_sizes)

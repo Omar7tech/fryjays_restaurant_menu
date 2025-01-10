@@ -1,7 +1,7 @@
 <div class="p-6 rounded-lg shadow-md">
     <h2 class="text-2xl font-bold mb-4">Edit Product</h2>
     @if ($errors->any())
-        <div class="alert alert-danger mb-4">
+        <div class="alert alert-error mb-4">
             <ul>
                 @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>
@@ -63,7 +63,15 @@
                 <option value="2">Design 2</option>
             </select>
         </div>
-
+        @if ($errors->any())
+            <div class="alert alert-error mb-4">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <button type="submit" class="btn btn-success w-full">Update Product</button>
     </form>
     <div class="mt-6 text-center space-y-5">
