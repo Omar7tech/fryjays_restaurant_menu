@@ -15,12 +15,26 @@ class Home extends Component
 
     public function mount()
     {
-        $this->setting = Setting::first();
+        $this->setting = Setting::firstOrCreate(
+            [],
+            [
+                'show_logo' => true,
+                'hero_text' => 'Welcome to Our Site!',
+                'show_search' => true,
+                'category_colored_title' => true,
+                'show_socials' => true,
+                'show_location' => true,
+                'phone' => '+123456789',
+            ]
+        );
     }
+
+
 
     public function updatedSearch()
     {
-$this->s_products = Product::where("name", "LIKE", "%{$this->search}%")->orderBy('name')->get();    }
+        $this->s_products = Product::where("name", "LIKE", "%{$this->search}%")->orderBy('name')->get();
+    }
 
     public function render()
     {

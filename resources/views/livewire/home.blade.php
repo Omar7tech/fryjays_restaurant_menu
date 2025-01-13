@@ -112,7 +112,10 @@
         <div class="py-10">
 
             @if ($setting->show_socials)
+            <div wire:ignore>
                 <x-social.main :$setting />
+            </div>
+
             @endif
 
             @if ($setting->show_location)

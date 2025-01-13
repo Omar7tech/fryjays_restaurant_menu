@@ -123,4 +123,6 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    'login_token' => env('SECRET_LOGIN_TOKEN', 'default_token_value'),
+
 ];
