@@ -24,7 +24,6 @@ Route::middleware("guest")->group(function () {
     Route::post('/login', [AuthController::class, 'authenticate'])->name('authenticate');
     Route::get("/custom-forget-pass" , [AuthController::class, 'forget_password'])->name("forget.password");
 });
-
 Route::middleware([RedirectToHomeIfNotAuthenticated::class])->prefix("admin")->name("admin.")->group(function () {
         Route::get('/', AdminHome::class)->name("index");
         Route::prefix("products")->name("products.")->group(function () {
