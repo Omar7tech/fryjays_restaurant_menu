@@ -13,7 +13,7 @@
     <div class="bg-neutral text-neutral-content text-center w-full p-1 rounded-lg shadow-sm mt-4">
         <p class="text-xs font-semibold">
             Developed by
-            <a href="https://omar7tech.com" target="_blank" class="text-blue-600 hover:text-blue-800 font-bold transition-all duration-300">
+            <a href="https://github.com/Omar7tech" target="_blank" class="text-blue-600 hover:text-blue-800 font-bold transition-all duration-300">
                 Omar7Tech - Omar Abi Farraj
             </a>
         </p>
@@ -24,10 +24,6 @@
             </a>
         </p>
     </div>
-
-
-
-
 </footer>
 <footer class="footer footer-center bg-neutral p-4 text-neutral-content">
     <aside>
@@ -36,6 +32,5 @@
 </footer>
 
 <script>
-    // Dynamically insert the current year
     document.getElementById('currentYear').textContent = new Date().getFullYear();
 </script>

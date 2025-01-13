@@ -38,16 +38,20 @@ class Home extends Component
 
     public function render()
     {
-        $categories = Category::where("enabled", true)
+        $categories = Category::where('enabled', true)
+            ->whereHas('products', function ($query) {
+                $query->where('enabled', true);
+            })
             ->with([
                 'products' => function ($query) {
-                    $query->where("enabled", true)->orderBy('position'); // Order products by position
+                    $query->where('enabled', true)
+                        ->orderBy('position');
                 }
             ])
-            ->orderBy('position')
-            ->has('products')
+            ->orderBy('position') 
             ->get();
 
-        return view('livewire.home', compact("categories"));
+        return view('livewire.home', compact('categories'));
     }
+
 }

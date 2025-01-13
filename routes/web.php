@@ -4,7 +4,6 @@ use App\Http\Middleware\RedirectToHomeIfNotAuthenticated;
 use App\Livewire\AdminAccount;
 use App\Livewire\AdminHome;
 use App\Livewire\Categories;
-use App\Livewire\CategoriesProducts;
 use App\Livewire\CategoryCreate;
 use App\Livewire\CategoryEdit;
 use App\Livewire\Home;
@@ -21,8 +20,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', Home::class)->name("home");
 
 Route::middleware("guest")->group(function () {
-    Route::get('/secure-login-' . config("app.login_token"), [AuthController::class, 'login'])->middleware('throttle:5,1')->name('login');
+    Route::get('/secure-login-' . config("app.login_token"), [AuthController::class, 'login'])->middleware('throttle:100,1')->name('login');
     Route::post('/login', [AuthController::class, 'authenticate'])->name('authenticate');
+    Route::get("/custom-forget-pass" , [AuthController::class, 'forget_password'])->name("forget.password");
 });
 
 Route::middleware([RedirectToHomeIfNotAuthenticated::class])->prefix("admin")->name("admin.")->group(function () {

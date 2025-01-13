@@ -9,8 +9,6 @@ use Illuminate\Support\Facades\Auth;
 
 class AdminAccount extends Component
 {
-
-
     public $username;
     public $password;
     public $new_password;

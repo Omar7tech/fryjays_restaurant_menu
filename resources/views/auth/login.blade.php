@@ -30,6 +30,18 @@
                         </ul>
                     </div>
                 @endif
+                @if (session('message'))
+                    <div class="alert alert-success">
+                        {{ session('message') }}
+                    </div>
+                @endif
+
+                @if (session('error'))
+                    <div class="alert alert-error">
+                        {{ session('error') }}
+                    </div>
+                @endif
+
 
                 <!-- Login Form -->
                 <form method="POST" action="{{ route('authenticate') }}">
@@ -63,7 +75,7 @@
 
                 <div class="text-sm flex justify-between mt-5">
                     <div>
-                        <a class="link link-primary " href="#">Forgot Password?</a>
+                        <a class="link link-primary " href="{{ route("forget.password") }}">Forgot Password?</a>
                     </div>
                     <div>
                         <a class="link link-primary"
