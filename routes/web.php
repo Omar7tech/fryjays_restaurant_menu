@@ -1,6 +1,7 @@
 <?php
 use App\Http\Controllers\AuthController;
 use App\Http\Middleware\RedirectToHomeIfNotAuthenticated;
+use App\Livewire\AdminAccount;
 use App\Livewire\AdminHome;
 use App\Livewire\Categories;
 use App\Livewire\CategoriesProducts;
@@ -24,7 +25,6 @@ Route::middleware("guest")->group(function () {
     Route::post('/login', [AuthController::class, 'authenticate'])->name('authenticate');
 });
 
-
 Route::middleware([RedirectToHomeIfNotAuthenticated::class])->prefix("admin")->name("admin.")->group(function () {
         Route::get('/', AdminHome::class)->name("index");
         Route::prefix("products")->name("products.")->group(function () {
@@ -41,6 +41,8 @@ Route::middleware([RedirectToHomeIfNotAuthenticated::class])->prefix("admin")->n
             Route::get("/{category}/edit", CategoryEdit::class)->name("edit");
         });
         Route::get("/settings", Settings::class)->name("settings");
+        Route::get('/account' , AdminAccount::class)->name("account");
+        Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 });
 
 Route::fallback(function () {
