@@ -17,10 +17,10 @@ class CategoryProductSeeder extends Seeder
         $currentMaxPosition = Category::max('position') ?? 0;
 
         $categories = [];
-        for ($i = 1; $i <= 5; $i++) {
+        for ($i = 1; $i <= 12; $i++) {
             $category = Category::create([
                 'name' => fake()->name,
-                'enabled' => fake()->boolean(),
+                'enabled' => true,
                 'position' => $currentMaxPosition + $i, // Increment Position value
             ]);
             $categories[] = $category; // Store the created category for later use
@@ -28,7 +28,7 @@ class CategoryProductSeeder extends Seeder
 
         // Create 10 products for each newly created category
         foreach ($categories as $category) {
-            Product::factory(10)->create(['category_id' => $category->id]);
+            Product::factory(25)->create(['category_id' => $category->id]);
         }
     }
 }

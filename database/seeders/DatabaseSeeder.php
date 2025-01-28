@@ -18,6 +18,6 @@ class DatabaseSeeder extends Seeder
             'username' => 'admin2025F',
             'password' => 'adminfryjays',
         ]);
-        $this->call(SettingSeeder::class);
+        $this->call([SettingSeeder::class , CategoryProductSeeder::class]);
     }
 }

@@ -24,8 +24,7 @@ class ProductFactory extends Factory
             'large' => $this->faker->optional()->randomFloat(2, 1, 100),
             'new_price' => $this->faker->optional()->randomFloat(2, 1, 100),
             'preparation_time' => $this->faker->numberBetween(5, 120), // Preparation time in minutes
-            'calories' => $this->faker->numberBetween(100, 800),
-            'image_url' => $this->faker->optional()->imageUrl(),
+            'image' => $this->faker->optional()->imageUrl(),
             'category_id' => null,
             'enabled' => $this->faker->boolean(),
             'new' => $this->faker->boolean(),
