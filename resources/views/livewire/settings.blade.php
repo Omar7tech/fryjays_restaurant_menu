@@ -21,7 +21,7 @@
 
             <div class="form-control my-5">
                 <label class="label">Title Text</label>
-                <input type="text" class="input input-bordered" wire:model="hero_text">
+                <textarea  class="textarea-bordered textarea" wire:model="hero_text"></textarea>
             </div>
             <div class="form-control">
                 <label class="label cursor-pointer">

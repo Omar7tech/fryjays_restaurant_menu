@@ -12,20 +12,23 @@
                             class="animate-fade-in-scale">
                     </div>
                 @endif
+
                 <div class="text-center text-2xl font-bold animated-gradient-text py-2">
-                    <p>
-                        {{ $setting->hero_text }}
-                    </p>
+                    <p style="white-space: pre-line;">{{ $setting->hero_text }}</p>
                 </div>
+
+
+
             </div>
         </div>
     </div>
 
+    {{-- Search functionality --}}
     <div
-        class="text-center container flex justify-center items-center flex-col {{ $setting->show_search ? '' : 'hidden' }}">
+        class="text-center flex justify-center items-center {{ $setting->show_search ? '' : 'hidden' }}">
         <label class="input input-bordered flex items-center gap-2">
             <!-- Search Input -->
-            <input type="text" class="grow" placeholder="Search" wire:model.live="search" />
+            <input type="text" class="w-full"  placeholder="Search" wire:model.live="search" />
 
             <!-- Show Search Icon if Input is Empty -->
             @if (empty($search))
@@ -48,42 +51,126 @@
         </label>
     </div>
 
+    @if (!$setting->category_colored_title)
+        <div class="relative flex items-center w-full mt-5">
+            <!-- Left Scroll Button -->
+            <button id="scrollLeft"
+                class="absolute left-0 z-10 p-1 rounded-full ml-1 backdrop-blur-md outline outline-xs outline-orange-500/50
+                    transition hidden text-orange-600">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="size-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                </svg>
+            </button>
 
+            <!-- Scrollable Categories -->
+            <div class="flex overflow-x-auto scrollbar-hide space-x-1 py-2 w-full" id="scrollContainer">
+                <div class="flex space-x-1">
+                    @foreach ($categories as $category)
+                        <a href="#category-{{ $category->id }}"
+                            class="btn relative after:content-[''] after:absolute after:left-0 after:bottom-0
+                            after:w-full after:h-0.5 after:bg-orange-700 after:scale-x-0 hover:after:scale-x-100
+                            after:transition-transform after:duration-300">
+                            {{ $category->name }}
+                        </a>
+                    @endforeach
+                    <a
+                        class="btn relative after:content-[''] after:absolute after:left-0 after:bottom-0
+                        after:w-full after:h-0.5">
 
+                    </a>
+                </div>
+            </div>
+
+            <!-- Right Scroll Button -->
+            <button id="scrollRight"
+                class="absolute   right-0 z-10 mr-1  p-1 rounded-full   backdrop-blur-md outline outline-xs outline-orange-500/50
+                    transition hidden text-orange-600">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="size-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+            </button>
+        </div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const scrollContainer = document.getElementById("scrollContainer");
+                const scrollLeft = document.getElementById("scrollLeft");
+                const scrollRight = document.getElementById("scrollRight");
+
+                function updateScrollButtons() {
+                    scrollLeft.classList.toggle("hidden", scrollContainer.scrollLeft <= 0);
+                    scrollRight.classList.toggle("hidden", scrollContainer.scrollLeft + scrollContainer.clientWidth >=
+                        scrollContainer.scrollWidth);
+                }
+
+                scrollContainer.addEventListener("scroll", updateScrollButtons);
+                updateScrollButtons();
+
+                scrollLeft.addEventListener("click", () => {
+                    scrollContainer.scrollBy({
+                        left: -200,
+                        behavior: "smooth"
+                    });
+                });
+
+                scrollRight.addEventListener("click", () => {
+                    scrollContainer.scrollBy({
+                        left: 200,
+                        behavior: "smooth"
+                    });
+                });
+            });
+        </script>
+    @endif
 
     <div class="space-y-2 mt-5">
         @if (empty($search))
-            @foreach ($categories as $category)
-                <div class="collapse collapse-plus bg-base-200">
-                    <input type="radio" name="my-accordion-3" {{ $loop->first ? 'checked' : '' }} />
-                    <div class="collapse-title text-xl font-bold">
-                        @if ($setting->category_colored_title)
-                            <span
-                                class="text-3xl text-orange-600">{{ strtoupper($category->name[0]) }}</span>{{ substr($category->name, 1) }}
-                        @else
+            @if ($setting->category_colored_title)
+                @foreach ($categories as $category)
+                    <div class="collapse collapse-plus bg-base-200">
+                        <input type="radio" name="my-accordion-3" {{ $loop->first ? 'checked' : '' }} />
+                        <div class="collapse-title text-xl font-bold">
                             <span>{{ $category->name }}</span>
-                        @endif
+                        </div>
 
-                    </div>
-
-                    <div class="collapse-content">
-                        <div class="">
-                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                                @foreach ($category->products as $product)
-                                    @if ($product->design == 1)
-                                        <x-cards.main :$product :$setting />
-                                    @else
-                                        <x-cards.main2 :$product :$setting />
-                                    @endif
-                                @endforeach
+                        <div class="collapse-content">
+                            <div class="">
+                                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+                                    @foreach ($category->products as $product)
+                                        @if ($product->design == 1)
+                                            <x-cards.main :$product :$setting />
+                                        @else
+                                            <x-cards.main2 :$product :$setting />
+                                        @endif
+                                    @endforeach
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            @endforeach
+                @endforeach
+            @else
+                @foreach ($categories as $category)
+                    <div class="flex w-full flex-col first:pt-0 pt-10 scroll-mt-16" id="category-{{ $category->id }}">
+                        <div class="divider text-orange-600 font-bold text-xl">{{ $category->name }}</div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+                        @foreach ($category->products as $product)
+                            @if ($product->design == 1)
+                                <x-cards.main :$product :$setting />
+                            @else
+                                <x-cards.main2 :$product :$setting />
+                            @endif
+                        @endforeach
+                    </div>
+                @endforeach
+
+            @endif
         @else
             @if (count($s_products) > 0)
-                <div class="bg-base-200 rounded-sm p-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div class="bg-base-200 rounded-sm p-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
                     @foreach ($s_products as $product)
                         @if ($product->design == 1)
                             <x-cards.main :$product :$setting />
@@ -135,6 +222,18 @@
         </div>
     @endif
 
+
+    <button id="scrollUpBtn"
+        class="fixed bottom-5 left-4 p-3 bg-orange-600 text-white rounded-full shadow-lg opacity-0 hover:opacity-100 transition-opacity">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor" class="size-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 6.75 12 3m0 0 3.75 3.75M12 3v18" />
+        </svg>
+
+    </button>
+
+
+
     <script>
         // Select all the icon items
         const iconItems = document.querySelectorAll('.icon-item');
@@ -155,5 +254,27 @@
     </script>
 
 
+    <script>
+        // Get the button element
+        const scrollUpBtn = document.getElementById('scrollUpBtn');
+
+        // When the user scrolls the page, execute this function
+        window.onscroll = function() {
+            // If the page is scrolled down more than 100px, show the button
+            if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+                scrollUpBtn.style.opacity = 1; // Show button
+            } else {
+                scrollUpBtn.style.opacity = 0; // Hide button
+            }
+        };
+
+        // When the user clicks on the button, scroll to the top of the page
+        scrollUpBtn.onclick = function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            }); // Smooth scroll to top
+        };
+    </script>
 
 </div>
