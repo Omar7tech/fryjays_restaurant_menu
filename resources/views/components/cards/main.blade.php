@@ -1,7 +1,7 @@
 @props(['product' => [], 'setting' => []])
 
 <div
-    class="{{ $product->top_seller ? 'border border-yellow-500' : '' }}  bg-base-100 shadow-md hover:shadow-lg rounded-lg overflow-hidden transition-shadow duration-300 ease-in-out p-4">
+    class="{{ $product->top_seller ? 'border border-yellow-500' : '' }}  {{ $setting->category_colored_title ? 'bg-base-100 shadow-md' : 'bg-base-200' }}  rounded-md overflow-hidden p-3">
     <div class="flex justify-between items-center mb-2">
         <div class="flex items-center">
             @if ($product->new)
@@ -34,7 +34,7 @@
 
 
         @if ($setting->show_images)
-            <div x-data="{ open: false }" class="h-20 w-20 flex-shrink-0">
+            <div x-data="{ open: false }" class="h-16 w-16 flex-shrink-0">
                 <!-- Thumbnail Image -->
                 <img loading="lazy"
                     src="{{ $product->image ? Storage::url($product->image) : Vite::asset('resources/images/no-image.png') }}"
@@ -60,15 +60,15 @@
 
         <div class="flex-1">
             @if ($setting->show_description)
-                <p class="text-sm text-gray-500">
+                <p class="text-xs text-gray-500">
                     {{ $product->description }}
                     {{ $product->preparation_time && $setting->show_preparation_time ? ', Preparation Time : ' . $product->preparation_time . ' mins' : '' }}
                 </p>
             @endif
 
             <!-- Price -->
-            <div class="flex justify-between items-center mt-2">
-                <div class="flex space-x-2 ">
+            <div class="flex justify-between items-center">
+                <div class="flex space-x-2">
                     @if ($setting->show_sale)
                         @if ($product->price)
                             <div class="flex items-center space-x-2">
@@ -119,13 +119,13 @@
         </div>
     </div>
 
+
     @if ($setting->show_sizes)
         @if ($product->small || $product->large)
-            <div class="mt-3">
+            <div class="mt-1">
                 <x-cards.sizes :$product />
             </div>
         @endif
     @endif
-    <!-- Sizes -->
 
 </div>
